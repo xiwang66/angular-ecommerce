@@ -13,7 +13,7 @@ export class ProductCategoryMenuComponent implements OnInit {
 
   constructor(private productService: ProductService) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.listProductCategories();
   }
 
