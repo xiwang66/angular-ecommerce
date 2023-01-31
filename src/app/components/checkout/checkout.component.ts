@@ -17,7 +17,6 @@ export class CheckoutComponent implements OnInit {
 
   checkoutFormGroup!: FormGroup;
 
-  cartItems: CartItem[] = [];
   totalPrice: number = 0;
   totalQuantity: number = 0;
 
@@ -34,6 +33,8 @@ export class CheckoutComponent implements OnInit {
               private shopFormService: ShopFormService) { }
 
   ngOnInit(): void {
+
+    this.reviewCartDetails();
 
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
@@ -94,8 +95,6 @@ export class CheckoutComponent implements OnInit {
       })
     })
 
-    this.listCartDetails();
-
     // populate credit card months
 
     const startMonth: number = new Date().getMonth() + 1;
@@ -125,25 +124,6 @@ export class CheckoutComponent implements OnInit {
         this.countries = data;
       }
     )
-  }
-
-  private listCartDetails() {
-
-    // get a handle to the cart items
-    this.cartItems = this.cartService.cartItems;
-
-    // subscribe to the cart totalPrice
-    this.cartService.totalPrice.subscribe(
-      data => this.totalPrice = data
-    )
-
-    // subscribe to the cart totalQuantity
-    this.cartService.totalQuantity.subscribe(
-      data => this.totalQuantity = data
-    )
-
-    // compute cart total price and quantity
-    this.cartService.computeCartTotals();
   }
 
   get firstName() {return this.checkoutFormGroup.get('customer.firstName');}
@@ -244,5 +224,16 @@ export class CheckoutComponent implements OnInit {
       }
     )
 
+  }
+
+  private reviewCartDetails() {
+    // subscribe to cartService.totalQuantity
+    this.cartService.totalQuantity.subscribe(
+      totalQuantity => this.totalQuantity = totalQuantity
+    )
+    // subscribe to cartService.totalPrice
+    this.cartService.totalPrice.subscribe(
+      totalPrice => this.totalPrice = totalPrice
+    )
   }
 }
