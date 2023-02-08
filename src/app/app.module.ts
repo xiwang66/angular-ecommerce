@@ -11,7 +11,7 @@ import { ProductCategoryMenuComponent } from './components/product-category-menu
 import { SearchComponent } from './components/search/search.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 
-import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CartStatusComponent } from './components/cart-status/cart-status.component';
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
@@ -29,6 +29,7 @@ import {OktaAuth} from '@okta/okta-auth-js';
 
 import myAppConfig from './config/my-app-config';
 import { MembersPageComponent } from './components/members-page/members-page.component';
+import { OrderHistoryComponent } from './components/order-history/order-history.component';
 
 const oktaConfig = myAppConfig.oidc;
 
@@ -43,6 +44,9 @@ function sendToLoginPage(oktaAuth: OktaAuth, injector: Injector){
 }
 
 const routes: Routes = [
+  {path: 'order-history', component:OrderHistoryComponent, canActivate:[OktaAuthGuard],
+    data: {onAuthRequired: sendToLoginPage}},
+
   {path: 'members', component:MembersPageComponent, canActivate:[OktaAuthGuard],
                     data: {onAuthRequired: sendToLoginPage}},
 
@@ -72,7 +76,8 @@ const routes: Routes = [
     CheckoutComponent,
     LoginComponent,
     LoginStatusComponent,
-    MembersPageComponent
+    MembersPageComponent,
+    OrderHistoryComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
