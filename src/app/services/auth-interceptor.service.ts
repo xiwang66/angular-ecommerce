@@ -3,6 +3,7 @@ import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/com
 import {from, lastValueFrom, Observable} from "rxjs";
 import {OktaAuth} from "@okta/okta-auth-js";
 import {OKTA_AUTH} from "@okta/okta-angular";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class AuthInterceptorService implements HttpInterceptor{
 
   private async handleAccess(request: HttpRequest<any>, next: HttpHandler): Promise<HttpEvent<any>> {
     // only add an access token for secured en points
-    const securedEndpoints = ['http://localhost:8080/api/orders'];
+    const theEndpoint = environment.sprintcodeApiUrl + '/orders';
+    const securedEndpoints = [theEndpoint];
 
     if (securedEndpoints.some(url => request.urlWithParams.includes(url))) {
       // get access token

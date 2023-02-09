@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  sprintcodeApiUrl: "https://localhost:8443/api"
+  sprintcodeApiUrl: "https://localhost:9898/api"
 };
 
 /*
